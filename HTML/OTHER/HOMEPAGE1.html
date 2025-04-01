@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourist Management System</title>
+    <link rel="stylesheet" href="../../CSS/stylesheet.css">
+    <link rel="stylesheet" href="../../CSS/carousel.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>    
+</head>
+<body>
+    <div class="video-container">
+        <nav class="navbar">
+            <h3 class="logo">Explore Ease</h3>
+            <ul>
+                <li><a href="#Destinations" class="buttonc">Destinations</a></li>
+                <li><a href="#vehicl" class="buttonc">Plan your trip</a></li>
+                <li><a href="#contact" class="buttonc">Book your vehicle</a></li>
+                <li><a href="#login" class="buttonc">Experiences</a></li>
+                <i class="heart-icon" class='bx bxs-heart'></i>
+            </ul>
+            <div class="icon-container">
+                <i class='bx bx-search' style='color:#f3f6f5'></i>
+                <span class="divider"></span>
+                <i class='bx bx-user' style='color:#f3f6f5'></i>
+                <span class="divider"></span>
+                <i class='bx bx-heart' style='color:#f3f6f5'></i>
+                <span class="divider"></span>
+                <i class='bx bx-menu' style='color:#f3f6f5'></i>
+            </div>
+        </nav>
+        <video id="mainVideo" autoplay loop muted playsinline class="background-video">
+            <source src="../OTHER/nature.mp4" type="video/mp4">
+        </video>
+        
+        <!-- Overlay gradient -->
+        <div class="overlay-gradient"></div>
+
+        <!-- Explore Button with Carousel -->
+        <div class="carousel-wrapper">
+            <div class="carousel-container">
+                <div class="carousel-background"></div>
+                <div class="carousel-content" id="carousel">
+                    <button class="explore-button" onclick="redirectToState()">Explore</button>
+                </div>
+                <button class="carousel-button prev" aria-label="Previous image" onclick="prevSlide()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <button class="carousel-button next" aria-label="Next image" onclick="nextSlide()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../script/carousel.js"></script>
+</body>
+</html>

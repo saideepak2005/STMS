@@ -1,0 +1,169 @@
+    /* General Styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #fdfcfb;
+        color: #333;
+    }
+
+    /* Hero Section */
+    .hero {
+        position: relative;
+        height: 70vh;
+        background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') center/cover fixed no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .hero .overlay {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-content {
+        position: relative;
+        color: white;
+        max-width: 600px;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 10px 20px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        font-size: 14px;
+    }
+
+    /* Packages Section */
+    .packages {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        padding: 50px;
+        text-align: center;
+    }
+
+    .card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 250px;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    h3 {
+        margin-bottom: 10px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    ul li {
+        padding: 5px 0;
+    }
+
+    /* Destinations */
+    .destinations {
+        text-align: center;
+        padding: 50px;
+    }
+
+    .destination-grid {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .destination {
+        position: relative;
+        width: 350px;
+        height: 400px;
+        background-size: cover;
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .destination .overlay {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        transition: background 0.3s ease;
+    }
+
+    .destination:hover {
+        transform: scale(1.05);
+    }
+
+    .destination:hover .overlay {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .destination h3 {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        color: white;
+        font-size: 20px;
+    }
+
+    /* Book Now Button */
+    .book-now {
+        text-align: center;
+        margin: 50px 0;
+        
+    }
+
+    .book-now button {
+        padding: 15px 30px;
+        font-size: 18px;
+        color: white;
+        background: linear-gradient(90deg, #f89b29, #ff6f61);
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .book-now button:hover {
+        transform: scale(1.1);
+    }
+    #but2
+    {
+    margin-left: 50px;
+    background: linear-gradient(90deg, #29f89e, #6196ff);
+    width: 200px;
+    }
+    #but2 a {
+        text-decoration: none;
+    }
+    .card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 250px;
+        transition: background 0.3s ease, transform 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .card:hover {
+        transform: scale(1.05);
+    }
+    
+    .selected {
+        background: #ffef96 !important; /* Selected Color */
+    }
+    

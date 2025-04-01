@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Payment Experience</title>
+    <link rel="stylesheet" href="..\..\CSS\payment.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="payment-card">
+            <div class="card-header">
+                <div class="logo-circle">
+                    <span class="logo-text">P</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+            </div>
+            <h1 class="title">Complete Your Payment</h1>
+            <p class="subtitle">Secure payment processing powered by Razorpay</p>
+            
+            <div class="amount-display">
+                <span class="currency">₹</span>
+                <span class="amount" id="totalAmount">Calculating...</span>
+            </div>
+            
+            <div class="payment-details">
+                <div class="detail-item">
+                    <span class="detail-label">Package</span>
+                    <span class="detail-value" id="selectedPackage">Fetching...</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Vehicle Type</span>
+                    <span class="detail-value" id="selectedVehicle">Fetching...</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Number of Days</span>
+                    <span class="detail-value" id="numberOfDays">Fetching...</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Accommodation & Food</span>
+                    <span class="detail-value" id="optionalServices">Fetching...</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Order ID</span>
+                    <span class="detail-value" id="orderId">Generating...</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Payment Status</span>
+                    <span class="detail-value" id="paymentStatus">Pending</span>
+                </div>
+            </div>
+            
+            <button id="pay-btn" class="pay-button">
+                <span class="button-text">Pay Now</span>
+                <span class="button-icon">→</span>
+            </button>
+        </div>
+    </div>
+    <script src="../../script/PAYMENT.js"></script>
+</body>
+</html>

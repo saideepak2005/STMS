@@ -1,0 +1,193 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-image: linear-gradient(rgba(219, 230, 233, 0.8), #ffffffcc);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 50px auto;  
+    padding: 0 20px;
+}
+
+.attractions-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.attractions-title {
+    font-size: 5rem;
+    color: #72c1e8;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.attractions-subtitle {
+    font-size: 1.2rem;
+    color: #72c1e8;
+    font-weight: 300;
+    position: relative;
+    display: inline-block;
+    padding: 0 30px;
+}
+
+.attractions-subtitle::before,
+.attractions-subtitle::after {
+    content: '';
+    height: 1px;
+    width: 100px;
+    background-color: #72c1e8;
+    position: absolute;
+    top: 50%;
+}
+
+.attractions-subtitle::before {
+    left: -70px;
+}
+
+.attractions-subtitle::after {
+    right: -70px;
+}
+
+.attractions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.attraction-card {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 350px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.attraction-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.attraction-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.attraction-card:hover img {
+    transform: scale(1.1);
+}
+
+.attraction-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.attraction-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.explore-btn {
+    display: inline-block;
+    background-color: #ff3333;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.attraction-card:hover .explore-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.explore-btn:hover {
+    background-color: #ff0000;
+    transform: scale(1.05);
+}
+
+.discover-more {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.discover-btn {
+    display: inline-block;
+    background-color: #ff3333;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(255, 51, 51, 0.3);
+}
+
+.discover-btn:hover {
+    background-color: #ff0000;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(255, 51, 51, 0.4);
+}
+
+@media (max-width: 1024px) {
+    .attractions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .attractions-title {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .attractions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .attractions-title {
+        font-size: 2.5rem;
+    }
+    
+    .attractions-subtitle::before,
+    .attractions-subtitle::after {
+        width: 50px;
+    }
+    
+    .attractions-subtitle::before {
+        left: -40px;
+    }
+    
+    .attractions-subtitle::after {
+        right: -40px;
+    }
+}

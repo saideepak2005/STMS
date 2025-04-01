@@ -1,0 +1,254 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.carousel-wrapper{
+    min-height: 100vh;
+    background:white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.carousel-container {
+    width: 1000px;
+    height: 620px;
+    /* overflow: hidden; */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-background {
+    position: absolute;
+    inset: 0;
+    /* background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.carousel-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide {
+    position: absolute;
+    width: 80%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    border-radius: 20px;
+}
+
+.slide.center {
+    z-index: 30;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.slide.left {
+    z-index: 20;
+    opacity: 1;
+    transform: translateX(-60%) 
+}
+
+.slide.right {
+    z-index: 20;
+    opacity: 1;
+    transform: translateX(60%) ;
+}
+
+.slide-image-container {
+    position: relative;
+}
+
+.slide-image {
+    width: 80vw;
+    height: 90vh; /* Increased height */
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+
+.slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.slide-caption h2 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 40;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 9999px;
+    padding: 0.75rem;
+    color: white;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: background-color 0.3s;
+}
+
+.carousel-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.carousel-button.prev {
+    left: 1rem;
+}
+
+.carousel-button.next {
+    right: 1rem;
+}
+
+.carousel-button svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.slide {
+    position: absolute;
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+    transform: scale(0);
+}
+
+.slide.center {
+    z-index: 30;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.slide.left {
+    z-index: 20;
+    opacity: 0.9;
+    transform: translateX(-60%) scale(0.95);
+}
+
+.slide.right {
+    z-index: 20;
+    opacity: 0.9;
+    transform: translateX(60%) scale(0.95);
+}
+
+.slide-image-container {
+    position: relative;
+}
+
+.slide-image {
+    width: 80vw;
+    height: 60vh;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+.carousel-content {
+    position: relative; /* Ensure relative positioning */
+    width: 100%;
+    height: 100%; /* Adjust as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.explore-button {
+    position: absolute;
+    bottom: 110px;
+    width: 130px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+    z-index: 10; /* Ensure it's above other elements */
+}
+
+.explore-button:hover {
+    background-color: transparent;
+    color:white;
+}
+
+/* Update the explore button styling */
+.slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide-caption h2 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.explore-button {
+    padding: 10px 20px;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.explore-button:hover {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+/* Make sure each slide properly positions its content */
+.slide {
+    position: absolute;
+    width: 80%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    border-radius: 20px;
+    overflow: hidden; /* Ensure content doesn't overflow */
+}

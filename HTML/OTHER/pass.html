@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Passenger Details Form</title>
+    <style>
+      /* Main styles */
+      * {
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
+      }
+      
+      body {
+        background-color: #f5f8fa;
+        margin: 0;
+        padding: 20px;
+      }
+      
+      .passenger-form-container {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: linear-gradient(109.6deg, rgba(223,234,247,1) 11.2%, rgba(244,248,252,1) 91.1%);
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #333;
+      }
+
+      .form-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: fadeIn 1s ease-out;
+      }
+
+      .form-header p {
+        color: #666;
+        font-size: 1.1rem;
+      }
+
+      #passenger-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .form-row .form-group {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #444;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background-color: white;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: #7E69AB;
+        box-shadow: 0 0 0 2px rgba(126, 105, 171, 0.2);
+      }
+
+      .form-control.error {
+        border-color: #ff4d4f;
+        background-color: #fff2f0;
+      }
+
+      .passenger-count-section {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        margin-bottom: 1.5rem;
+        animation: slideInUp 0.5s ease-out;
+      }
+
+      .passenger-count-section h2 {
+        margin-top: 0;
+        color: #333;
+        font-size: 1.3rem;
+      }
+
+      #passenger-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .passenger-details {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: all 0.5s ease;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      .passenger-details.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .passenger-title {
+        background: linear-gradient(90deg, #9b87f5, #7E69AB);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #f0f0f0;
+      }
+
+      .submit-section {
+        margin-top: 1.5rem;
+        display: flex;
+        justify-content: center;
+      }
+
+      .submit-button {
+        padding: 0.875rem 2rem;
+        background: linear-gradient(90deg, #9b87f5, #7E69AB);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 4px 12px rgba(126, 105, 171, 0.3);
+      }
+
+      .submit-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(126, 105, 171, 0.4);
+      }
+
+      .submit-button:active {
+        transform: translateY(0);
+        box-shadow: 0 4px 8px rgba(126, 105, 171, 0.3);
+      }
+
+      .success-toast {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background-color: #52c41a;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        z-index: 1000;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.3s, transform 0.3s;
+      }
+
+      .success-toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .success-toast-icon {
+        font-size: 1.5rem;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .passenger-form-container {
+          padding: 1.5rem;
+          margin: 1rem;
+        }
+
+        .form-header h1 {
+          font-size: 2rem;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="..\..\CSS\pass.css">
+  </head>
+  <body>
+    <div class="passenger-form-container">
+      <div class="form-header">
+        <h1>Passenger Details</h1>
+        <p>Please provide information for all passengers</p>
+      </div>
+
+      <form id="passenger-form">
+        <div class="passenger-count-section">
+          <h2>How many passengers?</h2>
+          <div class="form-group">
+            <label for="passenger-count">Number of Passengers</label>
+            <input 
+              type="number" 
+              id="passenger-count" 
+              class="form-control" 
+              min="1" 
+              max="10" 
+              value="1"
+              placeholder="Enter number of passengers" 
+            />
+          </div>
+        </div>
+
+        <div id="passenger-fields">
+          <!-- Passenger fields will be generated by JavaScript -->
+        </div>
+
+        <div class="submit-section">
+          <button type="submit" class="submit-button" id="submit-button">
+            Submit Passenger Details
+          </button>
+        </div>
+      </form>
+
+      <div class="success-toast" id="success-toast">
+        <span class="success-toast-icon">✓</span>
+        <span>Passenger details submitted successfully!</span>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Get DOM elements
+        const form = document.getElementById('passenger-form');
+        const passengerCountInput = document.getElementById('passenger-count');
+        const passengerFieldsContainer = document.getElementById('passenger-fields');
+        const submitButton = document.getElementById('submit-button');
+        const successToast = document.getElementById('success-toast');
+        
+        // Generate passenger detail fields based on count
+        passengerCountInput.addEventListener('change', function() {
+          const count = parseInt(this.value);
+          if (count > 0 && count <= 10) {
+            generatePassengerFields(count);
+          }
+        });
+        
+        // Initial generation of fields for default value
+        const initialCount = parseInt(passengerCountInput.value);
+        if (initialCount > 0) {
+          generatePassengerFields(initialCount);
+        }
+        
+        // Submit form handler
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Collect and validate passenger data
+          const passengerData = [];
+          const passengerElements = document.querySelectorAll('.passenger-details');
+          
+          let isValid = true;
+          
+          passengerElements.forEach((element, index) => {
+            const nameInput = element.querySelector('input[name="name[]"]');
+            const ageInput = element.querySelector('input[name="age[]"]');
+            const idInput = element.querySelector('input[name="id[]"]');
+            
+            // Basic validation
+            if (!nameInput.value.trim()) {
+              nameInput.classList.add('error');
+              isValid = false;
+            } else {
+              nameInput.classList.remove('error');
+            }
+            
+            if (!ageInput.value || isNaN(ageInput.value) || ageInput.value < 0) {
+              ageInput.classList.add('error');
+              isValid = false;
+            } else {
+              ageInput.classList.remove('error');
+            }
+            
+            if (!idInput.value.trim()) {
+              idInput.classList.add('error');
+              isValid = false;
+            } else {
+              idInput.classList.remove('error');
+            }
+            
+            passengerData.push({
+              name: nameInput.value,
+              age: ageInput.value,
+              id: idInput.value
+            });
+          });
+          
+          if (isValid) {
+            // Show success message
+            successToast.classList.add('show');
+            
+            // Log the data (in a real app, this would be sent to a server)
+            console.log('Submitted passenger data:', passengerData);
+            
+            // Hide success message after 3 seconds
+            setTimeout(() => {
+              successToast.classList.remove('show');
+            }, 3000);
+            
+            // Reset form after successful submission
+            form.reset();
+            passengerFieldsContainer.innerHTML = '';
+            generatePassengerFields(1); // Reset to 1 passenger
+            passengerCountInput.value = "1";
+          }
+        });
+        
+        // Function to generate passenger detail fields
+        function generatePassengerFields(count) {
+          passengerFieldsContainer.innerHTML = '';
+          
+          for (let i = 0; i < count; i++) {
+            const passengerDiv = document.createElement('div');
+            passengerDiv.className = 'passenger-details';
+            passengerDiv.innerHTML = `
+              <h3 class="passenger-title">Passenger ${i + 1}</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name-${i}">Full Name</label>
+                  <input type="text" id="name-${i}" name="name[]" placeholder="Enter full name" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="age-${i}">Age</label>
+                  <input type="number" id="age-${i}" name="age[]" placeholder="Age" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="id-${i}">ID/Passport Number</label>
+                <input type="text" id="id-${i}" name="id[]" placeholder="Enter ID or passport number" class="form-control">
+              </div>
+            `;
+            
+            passengerFieldsContainer.appendChild(passengerDiv);
+            
+            // Add entrance animation
+            setTimeout(() => {
+              passengerDiv.classList.add('show');
+            }, i * 100);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+<!-- Write your comments here 
+server.js - Backend API with Express.js
+const express = require("express");
+const mysql = require("mysql2");
+const cors = require("cors");
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+const db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "", 
+    database: "tourism_db"
+});
+
+db.connect(err => {
+    if (err) {
+        console.error("Database connection failed: ", err);
+    } else {
+        console.log("Connected to MySQL database");
+    }
+});
+
+app.post("/api/bookings", (req, res) => {
+    const { numPassengers, ...passengers } = req.body;
+    let sql = "INSERT INTO bookings (num_passengers, passenger_data) VALUES (?, ?)";
+    db.query(sql, [numPassengers, JSON.stringify(passengers)], (err, result) => {
+        if (err) {
+            console.error("Database Error: ", err);
+            res.status(500).json({ message: "Booking failed" });
+        } else {
+            res.json({ message: "Booking successful" });
+        }
+    });
+});
+
+app.listen(5000, () => console.log("Server running on port 5000"));
+
+// database.sql - SQL for MySQL Database
+CREATE DATABASE tourism_db;
+USE tourism_db;
+
+CREATE TABLE bookings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    num_passengers INT NOT NULL,
+    passenger_data JSON NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+-->
