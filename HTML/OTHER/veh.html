@@ -5,9 +5,205 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luxury Car Showcase</title>
     <link rel="stylesheet" href="..\..\CSS\veh.css">
+    <style>
+        /* Update these styles */
+        .vehicle-actions {
+            display: flex;
+            justify-content: center;
+            gap: 500px; /* Increased gap between buttons */
+            margin-top: 20px; /* Reduced top margin to move buttons up */
+            padding: 20px;
+            position: relative;
+            top: -120px; /* Move the entire container up */
+        }
+
+        .action-btn {
+            padding: 12px 35px; /* Increased horizontal padding */
+            border-radius: 4px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            min-width: 200px; /* Set minimum width for buttons */
+        }
+
+        .select-vehicle-btn {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .select-vehicle-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+        }
+
+        .passenger-details-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .passenger-details-btn:hover {
+            background-color: #27ae60;
+            transform: translateY(-3px);
+        }
+
+        .action-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Add these styles to the existing style section */
+        .passenger-details-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .passenger-details-btn:not(:disabled) {
+            opacity: 1;
+            cursor: pointer;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="root"></div>
+    <div class="vehicle-actions">
+        <button class="action-btn select-vehicle-btn" id="selectVehicleBtn" onclick="selectVehicle()">Select Vehicle</button>
+        <button class="action-btn passenger-details-btn" id="passengerDetailsBtn" onclick="goToPassengerDetails()" disabled>Proceed to Passenger Details</button>
+    </div>
     <script src="../../SCRIPT/ww.js"></script>
+    <script>
+        // Vehicle price mapping
+        const vehiclePrices = {
+            'Hyundai Exter': 3000,
+            'Toyota Innova': 5000,
+            'Swift Dzire': 2500,
+            'Honda City': 3500,
+            'Tata Nexon': 3200,
+            'Mahindra XUV': 4500,
+            'Toyota Fortuner': 6000,
+            'Maruti Ertiga': 4000
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const passengerDetailsBtn = document.getElementById('passengerDetailsBtn');
+            
+            // Check if vehicle is already selected
+            const selectedVehicle = localStorage.getItem('selectedVehicle');
+            if (selectedVehicle) {
+                passengerDetailsBtn.disabled = false;
+                passengerDetailsBtn.style.opacity = '1';
+                passengerDetailsBtn.style.cursor = 'pointer';
+            }
+
+            // Load existing cart data if any
+            const cartData = JSON.parse(localStorage.getItem('touristCart')) || [];
+            if (cartData.length > 0) {
+                // Cart exists, check if we need to update vehicle details
+                updateCartWithVehicle();
+            }
+        });
+        //sridhar
+        function selectVehicle() {
+    console.log("selectVehicle function called"); // Add logging
+    
+    const passengerDetailsBtn = document.getElementById('passengerDetailsBtn');
+    
+    // Since we're using ww.js which doesn't have carousel functionality,
+    // we need to get the current vehicle from the cars array
+    const car = cars[currentIndex];
+    console.log("Selected car:", car); // Add logging
+    
+    const vehicleData = {
+        type: car.model,
+        price: vehiclePrices[car.model] || 3000,
+        details: {
+            seating: car.seating,
+            safety: car.safety_rating,
+            engine: car.engine
+        }
+    };
+    
+    console.log("Vehicle data to save:", vehicleData); // Add logging
+
+    // Store the selected vehicle in localStorage
+    localStorage.setItem('selectedVehicle', JSON.stringify(vehicleData));
+
+    // Update cart with vehicle details
+    updateCartWithVehicle(vehicleData);
+
+    // Enable and style the passenger details button
+    passengerDetailsBtn.disabled = false;
+    passengerDetailsBtn.style.opacity = '1';
+    passengerDetailsBtn.style.cursor = 'pointer';
+    
+    // Show success message
+    alert('Vehicle selected successfully! You can now proceed to passenger details.');
+}
+
+        function updateCartWithVehicle(vehicleData = null) {
+            // Get current cart data
+            const cartData = JSON.parse(localStorage.getItem('touristCart')) || [];
+            if (cartData.length === 0) return;
+
+            // If no vehicleData provided, try to get from localStorage
+            if (!vehicleData) {
+                const savedVehicle = localStorage.getItem('selectedVehicle');
+                if (!savedVehicle) return;
+                vehicleData = JSON.parse(savedVehicle);
+            }
+
+            // Update cart items with vehicle information
+            const updatedCart = cartData.map(item => {
+                if (item.type === 'state-package') {
+                    return {
+                        ...item,
+                        vehicleDetails: {
+                            type: vehicleData.type,
+                            price: vehicleData.price,
+                            details: vehicleData.details
+                        },
+                        totalPrice: (parseFloat(item.price) || 0) + (parseFloat(vehicleData.price) || 0)
+                    };
+                }
+                return item;
+            });
+
+            // Save updated cart back to localStorage
+            localStorage.setItem('touristCart', JSON.stringify(updatedCart));
+        }
+
+        function goToPassengerDetails() {
+    console.log("goToPassengerDetails function called"); // Add logging
+    
+    // Check if a vehicle is selected
+    const selectedVehicle = localStorage.getItem('selectedVehicle');
+    console.log("Selected vehicle:", selectedVehicle); // Add logging
+    
+    if (!selectedVehicle) {
+        alert('Please select a vehicle first');
+        return;
+    }
+
+    // Redirect to pass.html with the correct path
+    console.log("Redirecting to passenger details page"); // Add logging
+    window.location.href = 'pass.html';
+}
+    </script>
 </body>
 </html>

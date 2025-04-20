@@ -7,64 +7,412 @@
     <link rel="stylesheet" href="../../CSS/stylesheet.css">
     <link rel="stylesheet" href="sliding/carousel.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>    
+    <style>
+        /* Cart Icon Styles */
+        .cart-icon-link {
+            text-decoration: none;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-icon-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ff4d4d;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        /* Card buttons */
+        .add-to-cart-btn {
+            margin-top: 10px;
+            padding: 6px 12px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border: 1px solid white;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .content {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            color: white;
+            text-align: center;
+        }
+
+        /* Cart Page Styles */
+        .cart-page {
+            max-width: 1200px;
+            margin: 100px auto;
+            padding: 20px;
+        }
+
+        .cart-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .cart-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 50px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .cart-empty h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .cart-empty .browse-btn {
+            display: inline-block;
+            background-color: #ff4d4d;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .cart-empty .browse-btn:hover {
+            background-color: #ff3333;
+        }
+
+        .cart-items {
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+
+        .cart-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .cart-item-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .cart-item-price {
+            font-size: 1.1rem;
+            color: #ff4d4d;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-remove {
+            background: transparent;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .cart-item-remove:hover {
+            color: #ff4d4d;
+        }
+
+        .cart-summary {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .cart-summary h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .summary-row.total {
+            font-weight: 600;
+            font-size: 1.2rem;
+            border-bottom: none;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        .cart-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .continue-shopping, .checkout-btn {
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .continue-shopping {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .continue-shopping:hover {
+            background-color: #e0e0e0;
+        }
+
+        .checkout-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .checkout-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-3px);
+        }
+
+        /* Passenger Details Form */
+        .passenger-form {
+            max-width: 800px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .form-subtitle {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-col {
+            flex: 1;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .back-btn, .submit-btn {
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn {
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+        }
+
+        .back-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Cart notification */
+        .cart-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+    </style>
 </head>
 <body>
-        <div class="video-container">
-            <nav class="navbar">
-                <h3 class="logo">Explore Ease</h3>
-                <ul>
-                    <li><a href="#Destinations" class="buttonc">Destinations</a></li>
-                    <li><a href="#vehicl" class="buttonc">Plan your trip</a></li>
-                    <li><a href="#contact" class="buttonc">Book your vehicle</a></li>
-                    <li><a href="#login" class="buttonc">Experiences</a></li>
-                    <i class="heart-icon" class='bx bxs-heart' ></i>
-                </ul>
-                <div class="icon-container">
-                <i class='bx bx-search' style='color:#f3f6f5'  ></i>
+    <div class="video-container">
+        <nav class="navbar">
+            <h3 class="logo">Explore Ease</h3>
+            <ul>
+                <li><a href="#Destinations" class="buttonc">Destinations</a></li>
+                <li><a href="#vehicl" class="buttonc">Plan your trip</a></li>
+                <li><a href="#contact" class="buttonc">Book your vehicle</a></li>
+                <li><a href="#login" class="buttonc">Experiences</a></li>
+                <i class="heart-icon" class='bx bxs-heart'></i>
+            </ul>
+            <div class="icon-container">
+                <i class='bx bx-search' style='color:#f3f6f5'></i>
                 <span class="divider"></span>
                 <i class='bx bx-user' style='color:#f3f6f5'></i>
                 <span class="divider"></span>
-                <i class='bx bx-heart' style='color:#f3f6f5' ></i>
+                <i class='bx bx-heart' style='color:#f3f6f5'></i>
                 <span class="divider"></span>
-                <i class='bx bx-menu' style='color:#f3f6f5' ></i>
-                </div>
-            </nav>
-            <video id="mainVideo" autoplay loop muted playsinline class="background-video">
-                <source src="nature.mp4" type="video/mp4">
-            </video>
-            
-            <!-- Overlay gradient -->
-            <div class="overlay-gradient"></div>
-            <!-- Video controls and category selection -->
-            <div class="controls-container">
-        <div class="controls-wrapper">
-            <!-- Category buttons -->
-            <div class="category-buttons">
-                <div class="button-group">
-                    <button class="category-btn active" data-video="nature.mp4">Nature</button>
-                    <div class="separator"></div>
-                    <button class="category-btn" data-video="adventure.mp4">Adventure</button>
-                    <div class="separator"></div>
-                    <button class="category-btn" data-video="Heritage2.mp4">Heritage</button>
-                </div>
-                <button id="muteToggle" class="mute-btn">Unmute</button>
+                <a href="cart.html" class="cart-icon-link">
+                    <div class="cart-icon-wrapper">
+                        <i class='bx bx-cart' style='color:#f3f6f5'></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </a>
+                <span class="divider"></span>
+                <i class='bx bx-menu' style='color:#f3f6f5'></i>
             </div>
+        </nav>
+        <video id="mainVideo" autoplay loop muted playsinline class="background-video">
+            <source src="nature.mp4" type="video/mp4">
+        </video>
+        
+        <!-- Overlay gradient -->
+        <div class="overlay-gradient"></div>
+        
+        <!-- Video controls and category selection -->
+        <div class="controls-container">
+            <div class="controls-wrapper">
+                <!-- Category buttons -->
+                <div class="category-buttons">
+                    <div class="button-group">
+                        <button class="category-btn active" data-video="nature.mp4">Nature</button>
+                        <div class="separator"></div>
+                        <button class="category-btn" data-video="adventure.mp4">Adventure</button>
+                        <div class="separator"></div>
+                        <button class="category-btn" data-video="Heritage2.mp4">Heritage</button>
+                    </div>
+                    <button id="muteToggle" class="mute-btn">Unmute</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Arrow Buttons -->
+        <div class="arrow-buttons">
+            <button id="prevVideo" class="arrow-btn"><i class='bx bx-left-arrow-alt' style='color:#f5f9f8'></i></button> <!-- Left Arrow -->
+            <button id="nextVideo" class="arrow-btn"><i class='bx bx-right-arrow-alt' style='color:#f5f9f8'></i></button> <!-- Right Arrow -->
         </div>
     </div>
-
-    <!-- Arrow Buttons -->
-            <div class="arrow-buttons">
-                <button id="prevVideo" class="arrow-btn"><i class='bx bx-left-arrow-alt' style='color:#f5f9f8' ></i></button> <!-- Left Arrow -->
-                <button id="nextVideo" class="arrow-btn"><i class='bx bx-right-arrow-alt' style='color:#f5f9f8'  ></i></button> <!-- Right Arrow -->
-            </div>
-        </div>
-        <div class="carousel-wrapper">
-            <div class="carousel-container">
+    
+    <div class="carousel-wrapper">
+        <div class="carousel-container">
             <div class="carousel-background"></div>
             <div class="carousel-content" id="carousel">
                 <button class="explore-button">Explore</button>
             </div>
-            <!-- <div class="carousel-content" id="carousel"></div> -->
             <button class="carousel-button prev" aria-label="Previous image">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -76,121 +424,32 @@
                 </svg>
             </button>
         </div>
+    </div>
+    
+    <script src="sliding/carousel.js"></script>
+    
+    <div class="containerr">
+        <div class="headerr">
+            <span class="limited-time-badge">Limited Time</span>
+            <h1 class="title">Exclusive Offers</h1>
+            <p class="subtitle">Discover our carefully curated selection of premium offers designed just for you</p>
         </div>
-        <script src="sliding/carousel.js"></script>
-    <div>
-        <div class="containerr">
-            <div class="headerr">
-                <span class="limited-time-badge">Limited Time</span>
-                <h1 class="title">Exclusive Offers</h1>
-                <p class="subtitle">Discover our carefully curated selection of premium offers designed just for you</p>
-            </div>
-            
-            <div class="offers-container">
-                <div class="offer-card">
-                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000" alt="Premium Package">
-                    <div class="content">
-                        <span class="discount-badge">Save 30%</span>
-                        <h3>Premium Package</h3>
-                        <p>Exclusive benefits for valued customers</p>
-                    </div>
-                </div>
-                
-                <div class="offer-card">
-                    <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=1000" alt="Special Deal">
-                    <div class="content">
-                        <span class="discount-badge">Save 25%</span>
-                        <h3>Special Deal</h3>
-                        <p>Limited time offer with exceptional value</p>
-                    </div>
-                </div>
-    
-                <div class="offer-card">
-                    <img src="https://images.unsplash.com/photo-1441985969846-3e7c90531139?q=80&w=1000" alt="Seasonal Promotion">
-                    <div class="content">
-                        <span class="discount-badge">Save 20%</span>
-                        <h3>Seasonal Promotion</h3>
-                        <p>Take advantage of seasonal discounts</p>
-                    </div>
-                </div>
-    
-                <div class="offer-card">
-                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000" alt="Flash Sale">
-                    <div class="content">
-                        <span class="discount-badge">Save 40%</span>
-                        <h3>Flash Sale</h3>
-                        <p>Quick deals with amazing discounts</p>
-                    </div>
-                </div>
-    
-                <div class="offer-card">
-                    <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=1000" alt="Holiday Bundle">
-                    <div class="content">
-                        <span class="discount-badge">Save 35%</span>
-                        <h3>Holiday Bundle</h3>
-                        <p>Special holiday packages with great savings</p>
-                    </div>
-                </div>
-    
-                <div class="offer-card">
-                    <img src="https://images.unsplash.com/photo-1441985969846-3e7c90531139?q=80&w=1000" alt="Adventure Escape">
-                    <div class="content">
-                        <span class="discount-badge">Save 15%</span>
-                        <h3>Adventure Escape</h3>
-                        <p>Exciting outdoor experiences for thrill-seekers</p>
-                    </div>
-                </div>
-    
-                <div class="offer-card">
-                    <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=1000" alt="Luxury Retreat">
-                    <div class="content">
-                        <span class="discount-badge">Save 50%</span>
-                        <h3>Luxury Retreat</h3>
-                        <p>Experience comfort and elegance at the best resorts</p>
-                    </div>
-                </div>
-    
-                <div class="offer-card">
-                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000" alt="Family Package">
-                    <div class="content">
-                        <span class="discount-badge">Save 20%</span>
-                        <h3>Family Package</h3>
-                        <p>Enjoy memorable family vacations at affordable rates</p>
-                    </div>
-                </div>
-    
-                <div class="offer-card">
-                    <img src="https://images.unsplash.com/photo-1441985969846-3e7c90531139?q=80&w=1000" alt="Weekend Getaway">
-                    <div class="content">
-                        <span class="discount-badge">Save 10%</span>
-                        <h3>Weekend Getaway</h3>
-                        <p>Short trips for refreshing experiences</p>
-                    </div>
-                </div>
-            </div>
+        
+        <div class="offers-container">
+            <!-- Offer cards will be dynamically generated by JavaScript -->
         </div>
     </div>
+
     <footer class="main-footer">
         <div class="footer-container">
             <div class="footer-section">
                 <div class="social-links">
                     <h3>Follow us</h3>
                     <div class="social-icons">
-                        <a href="#" class="social-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5 0-.28-.03-.56-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                        </a>
+                        <a href="#" class="social-icon"><i class='bx bxl-facebook'></i></a>
+                        <a href="#" class="social-icon"><i class='bx bxl-twitter'></i></a>
+                        <a href="#" class="social-icon"><i class='bx bxl-instagram'></i></a>
+                        <a href="#" class="social-icon"><i class='bx bxl-youtube'></i></a>
                     </div>
                 </div>
             </div>
@@ -202,27 +461,25 @@
                     <li><a href="#">Experiences</a></li>
                     <li><a href="#">Festivals and Events</a></li>
                     <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Incredible India Content Hub</a></li>
                 </ul>
             </div>
 
             <div class="footer-section">
                 <h3>Newsletter</h3>
                 <p>Sign up for exciting news, learn more about our events and get great travel ideas.</p>
-                <button class="subscribe-btn">Subscribe now</button>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit" class="subscribe-btn">Subscribe</button>
+                </form>
             </div>
-
-            <div class="footer-section">
-                <h3>Scan to chat</h3>
-                <div class="qr-code">
-                    <img src="qrcode.jpg" alt="QR Code">
-                </div>
-            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Explore Ease. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="../../script/triangle.js"></script>
-    <script src="../../script/shift.js"></script>
-    <script src="../../script/mute.js"></script>
+    <div class="cart-notification"></div>
+
+    <script src="script.js"></script>
 </body>
 </html>

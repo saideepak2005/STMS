@@ -15,8 +15,8 @@ const images = [
         link: "../STATE/ANDHRAPACKAGE.html" // Corrected relative path
     },
     {
-        url: "https://lp-cms-production.imgix.net/2019-06/GettyImages-149315250_full.jpg?fit=crop&q=40&sharp=10&vib=20&auto=format&ixlib=react-8.6.4",
-        text: "Tamil Nadu",
+        url: "https://images.pexels.com/photos/88212/pexels-photo-88212.jpeg?cs=srgb&dl=pexels-umaraffan499-88212.jpg&fm=jpg",
+        text: "GOA",
         link: "../STATE/GOAPACKAGE.html" // Corrected relative path (though check if this is the right file for Tamil Nadu)
     },
     {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tour Package - Hyderabad Heritage Tour</title>
-    <link rel="stylesheet" href="..\..\..\CSS\PACK.CSS">
+    <link rel="stylesheet" href="../../../CSS/PACK.CSS">
 </head>
 <body>
 
@@ -23,7 +23,7 @@
 
     <!-- Package Details -->
     <section class="packages">
-        <div class="card" id="trip-card">
+        <div class="card" id="trip-card" data-item="trip" data-price="599" data-name="Hyderabad Heritage Tour">
             <h3>Trip Details</h3>
             <ul>
                 <li>Duration: 1 Day</li>
@@ -32,7 +32,7 @@
                 <li>Group Size: Max 20 people</li>
             </ul>
         </div>
-        <div class="card" id="accommodation-card">
+        <div class="card" id="accommodation-card" data-item="accommodation" data-price="299" data-name="Luxury Accommodation">
             <h3>Accommodation</h3>
             <ul>
                 <li>Taj Krishna Hyderabad</li>
@@ -41,7 +41,7 @@
                 <li>Private Facilities</li>
             </ul>
         </div>
-        <div class="card" id="food-card">
+        <div class="card" id="food-card" data-item="food" data-price="199" data-name="Premium Dining">
             <h3>Dining</h3>
             <ul>
                 <li>Full Board Meals</li>
@@ -51,7 +51,7 @@
             </ul>
         </div>
     </section>
-    <h3 style="margin-left: 300px;  rgb(13, 9, 80); font-weight: bold;">
+    <h3 style="margin-left: 300px;  color: rgb(13, 9, 80); font-weight: bold;">
         NOTE: ACCOMMODATION AND FOOD ARE OPTIONAL. (YOU MAY DESELECT IT BY CLICKING ON IT)
     </h3>
 
@@ -60,19 +60,19 @@
         <h2>Explore Destinations</h2>
         <div class="destination-grid">
             <a href="../../places html/char.html">
-                <div class="destination" style="background-image: url('https://imgk.timesnownews.com/story/1530894902-Charminar_Hyd.jpg');">
+                <div class="destination" style="background-image: url('assets/images/charminar.jpg');">
                     <div class="overlay"></div>
                     <h3>Charminar</h3>
                 </div>
             </a>
             <a href="../../places html/gol.html">
-                <div class="destination" style="background-image: url('https://i.pinimg.com/736x/48/48/94/484894f43fe37fa3a3e4a2c95adda321.jpg');">
+                <div class="destination" style="background-image: url('assets/images/golconda.jpg');">
                     <div class="overlay"></div>
                     <h3>Golconda Fort</h3>
                 </div>
             </a>
             <a href="../../places html/hus.html">
-                <div class="destination" style="background-image: url('https://www.indiatourismguide.in/wp-content/uploads/2017/11/Hussain-Sagar.jpg');">
+                <div class="destination" style="background-image: url('assets/images/hussain-sagar.jpg');">
                     <div class="overlay"></div>
                     <h3>Hussain Sagar</h3>
                 </div>
@@ -82,9 +82,10 @@
 
     <!-- Book Now Button -->
     <div class="book-now">
-        <button onclick="bookNow()" id="but2"> <a href="../../OTHER/veh.html">NEXT</a></button>
+        <button id="proceed-button">PROCEED TO NEXT STEP</button>
     </div>
 
+    <script src="../../../script/cart.js"></script>
     <script src="../../../script/PACK.js"></script>
 </body>
 </html>
